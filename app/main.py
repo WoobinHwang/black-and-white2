@@ -11,23 +11,17 @@ cur=db.cursor()
 
 @app.route('/')
 def hello_world():
-    return 'hello, user!'
+    return 'hello, human!'
 
 
 # 유저가 입력 한 값 반환
 @app.route('/api/test', methods=['POST'])
 def test():
-    # print("ddd")
     body = request.get_json() # 사용자가 입력한 데이터
-    # msg = "셀레니움"
-    # name = body['userRequest']
-    # age = type(body['userRequest']['utterance'])
 
     # 입력값 줄바꿈 제거
     body2 = str(body['userRequest']['utterance']).strip() 
     userID = str(body['userRequest']['user']['id'])
-    print(body)
-
 
     responseBody = {
         "version": "2.0",
@@ -47,9 +41,9 @@ def test():
 
 
 
-# # db에 점수추가
+# # 채널 접속
 @app.route('/api/enterchannel', methods=['POST'])
-def dbinsert():
+def enterchannel():
     body = request.get_json() # 사용자가 입력한 데이터
 
     
@@ -64,26 +58,27 @@ def dbinsert():
     channelchannel_data = "'%s'" %text
     cur=db.cursor()
 
-    cur.execute("SELECT * FROM blackwhite WHERE channel=%s;" % (channelchannel_data))
+    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s;" % (channelchannel_data))
     rows = cur.fetchall()
 
-    cur.execute("SELECT * FROM blackwhite WHERE channel=%s AND userid=%s;" % (channelchannel_data, idid_data))
+    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND userid=%s;" % (channelchannel_data, idid_data))
     rows2 = cur.fetchall()
+
+    cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s;" % (idid_data))
+    rows3 = cur.fetchall()
 
     if len(rows2) != 0:
         result = "해당 채널에 이미 접속중이십니다"
-
+    elif len(rows3) != 0:
+        result = "이미 다른 채널에 접속중이십니다"
     elif len(rows) < 2:
         # cur.execute("INSERT INTO score (date, id, score) VALUES (%s, %s, %s);"
-        cur.execute("INSERT INTO blackwhite (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
+        cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
             # , (idid_data, score_data) )
             , (id_data, channel_data, 0, 0, 200, 0) )
         db.commit()
-
         result = "채널에 참가하였습니다"
-
     else :
-        
         result = "해당 채널에 이미 사람이 다 찼습니다."
 
 
@@ -103,6 +98,74 @@ def dbinsert():
     }
 
     return responseBody
+
+
+# # 숫자 제출하기
+@app.route('/api/submitnumber', methods=['POST'])
+def submitnumber():
+    body = request.get_json() # 사용자가 입력한 데이터
+
+    
+    id_data = '%s' %str(body['userRequest']['user']['id'])
+    idid_data = "'%s'" %str(body['userRequest']['user']['id'])
+    try :
+        text = body['userRequest']['utterance'].split(" ")[0]
+    except :
+        text = 0
+        
+    number_data = '%s' %text
+    
+    cur=db.cursor()
+
+    # userid, turn, numbers, usenum, result
+    # 컬럼 : userid, channel, score, turn, numbers, usenum, result
+
+    cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND turn=0;" % (idid_data))
+    checkperson = cur.fetch()
+    targetchannel = checkperson[1]
+    channel_data = '%s' %targetchannel
+    channelchannel_data = "'%s'" %targetchannel
+
+    cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s;" % (idid_data))
+    rows = cur.fetchall()
+
+    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND userid!=%s;" % (channelchannel_data, idid_data))
+    rows2 = cur.fetchall()
+
+    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s;" % (channelchannel_data))
+    rows3 = cur.fetchall()
+
+    result = len(rows3)
+
+    # if len(rows) > len(rows2):
+    #     result = "상대방의 차례입니다 기다려주세요."
+    # elif len(rows) == 0:
+    #     print("")
+
+
+
+    
+
+
+    
+
+    responseBody = {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": str(result) + number_data
+                    }
+                }
+            ]
+        }
+    }
+
+    return responseBody
+
+
+
 
 # # # 오늘의 만족도
 # @app.route('/api/todayscore', methods=['POST'])
