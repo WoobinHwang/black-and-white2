@@ -1,3 +1,4 @@
+from unittest import result
 from flask import Flask, request
 # import requests
 import psycopg2
@@ -34,7 +35,7 @@ def test():
             "outputs": [
                 {
                     "simpleText": {
-                        "text": body2 + "입력완료! \n " + userID
+                        "text": body2 + "입력완료! \n" + userID
                     }
                 }
             ]
@@ -47,29 +48,39 @@ def test():
 
 
 # # db에 점수추가
-@app.route('/api/dbinsert', methods=['POST'])
+@app.route('/api/enterchannel', methods=['POST'])
 def dbinsert():
     body = request.get_json() # 사용자가 입력한 데이터
 
-    # date_data = datetime.today().strftime('%Y-%m-%d')
-    id_data = "'%s'" %str(body['userRequest']['user']['id'])
-    idid_data = '%s' %str(body['userRequest']['user']['id'])
-    score_data = str(list(body['userRequest']['utterance'])[1])
+    
+    id_data = '%s' %str(body['userRequest']['user']['id'])
+    idid_data = "'%s'" %str(body['userRequest']['user']['id'])
+    text = body['userRequest']['utterance'].split(" ")[0]
+    channel_data = '%s' %text
+    channelchannel_data = "'%s'" %text
     cur=db.cursor()
 
-    cur.execute("SELECT * FROM score WHERE id=%s;" % (id_data))
+    cur.execute("SELECT * FROM blackwhite WHERE channel=%s;" % (channelchannel_data))
     rows = cur.fetchall()
-    
-    if len(rows) == 0:
-        cur.execute("INSERT INTO score (date, id, score) VALUES (%s, %s, %s);"
-                , (datetime.today().strftime('%Y-%m-%d'), idid_data, score_data) )
+
+    # cur.execute("INSERT INTO blackwhite (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
+    #             , ("woob", "korea", 0, 1, 200, 0) )
+
+    if len(rows) < 2:
+        # cur.execute("INSERT INTO score (date, id, score) VALUES (%s, %s, %s);"
+        cur.execute("INSERT INTO blackwhite (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
+            # , (idid_data, score_data) )
+            , (id_data, channel_data, 0, 0, 200, 0) )
+        db.commit()
+        
+        result = "채널에 참가하였습니다"
 
     else :
-        cur.execute("UPDATE score SET date=%s, score=%s WHERE id=%s;"
-                , (datetime.today().strftime('%Y-%m-%d'),score_data, idid_data) )
+        
+        result = "해당 채널에 이미 사람이 다 찼습니다."
 
 
-    db.commit()
+    
 
     responseBody = {
         "version": "2.0",
@@ -77,7 +88,7 @@ def dbinsert():
             "outputs": [
                 {
                     "simpleText": {
-                        "text": "점수가 반영되었습니다.\n감사합니다."
+                        "text": result
                     }
                 }
             ]
