@@ -55,7 +55,11 @@ def dbinsert():
     
     id_data = '%s' %str(body['userRequest']['user']['id'])
     idid_data = "'%s'" %str(body['userRequest']['user']['id'])
-    text = body['userRequest']['utterance'].split(" ")[0]
+    try :
+        text = body['userRequest']['utterance'].split(" ")[0]
+    except :
+        text = "korea"
+        
     channel_data = '%s' %text
     channelchannel_data = "'%s'" %text
     cur=db.cursor()
@@ -63,16 +67,19 @@ def dbinsert():
     cur.execute("SELECT * FROM blackwhite WHERE channel=%s;" % (channelchannel_data))
     rows = cur.fetchall()
 
-    # cur.execute("INSERT INTO blackwhite (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
-    #             , ("woob", "korea", 0, 1, 200, 0) )
+    cur.execute("SELECT * FROM blackwhite WHERE channel=%s AND userid=%s;" % (channelchannel_data, idid_data))
+    rows2 = cur.fetchall()
 
-    if len(rows) < 2:
+    if len(rows2) != 0:
+        result = "해당 채널에 이미 접속중이십니다"
+
+    elif len(rows) < 2:
         # cur.execute("INSERT INTO score (date, id, score) VALUES (%s, %s, %s);"
         cur.execute("INSERT INTO blackwhite (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
             # , (idid_data, score_data) )
             , (id_data, channel_data, 0, 0, 200, 0) )
         db.commit()
-        
+
         result = "채널에 참가하였습니다"
 
     else :
