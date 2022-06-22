@@ -10,7 +10,7 @@ cur=db.cursor()
 
 @app.route('/')
 def hello_world():
-    return 'bye, user!'
+    return 'hello, user!'
 
 
 # 유저가 입력 한 값 반환
@@ -21,64 +21,70 @@ def test():
     # msg = "셀레니움"
     # name = body['userRequest']
     # age = type(body['userRequest']['utterance'])
-    body2 = str(body['userRequest']['utterance']).strip()
-    body3 = str(body['userRequest']['user']['id'])
+
+    # 입력값 줄바꿈 제거
+    body2 = str(body['userRequest']['utterance']).strip() 
+    userID = str(body['userRequest']['user']['id'])
     print(body)
-    age = "27"
-    responseData = {
+
+
+    responseBody = {
         "version": "2.0",
-        "data": {
-                "landingUrl": body2
-                , "msg" : body
-                , "name" : body3
-                , "age" : "age"
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": body2 + "입력완료! \n " + userID
+                    }
+                }
+            ]
         }
     }
 
-    return responseData
+    return responseBody
 
 
 
 
-# # # db에 점수추가
-# @app.route('/api/dbinsert', methods=['POST'])
-# def dbinsert():
-#     body = request.get_json() # 사용자가 입력한 데이터
+# # db에 점수추가
+@app.route('/api/dbinsert', methods=['POST'])
+def dbinsert():
+    body = request.get_json() # 사용자가 입력한 데이터
 
-#     # date_data = datetime.today().strftime('%Y-%m-%d')
-#     id_data = "'%s'" %str(body['userRequest']['user']['id'])
-#     idid_data = '%s' %str(body['userRequest']['user']['id'])
-#     score_data = str(list(body['userRequest']['utterance'])[1])
-#     cur=db.cursor()
+    # date_data = datetime.today().strftime('%Y-%m-%d')
+    id_data = "'%s'" %str(body['userRequest']['user']['id'])
+    idid_data = '%s' %str(body['userRequest']['user']['id'])
+    score_data = str(list(body['userRequest']['utterance'])[1])
+    cur=db.cursor()
 
-#     cur.execute("SELECT * FROM score WHERE id=%s;" % (id_data))
-#     rows = cur.fetchall()
+    cur.execute("SELECT * FROM score WHERE id=%s;" % (id_data))
+    rows = cur.fetchall()
     
-#     if len(rows) == 0:
-#         cur.execute("INSERT INTO score (date, id, score) VALUES (%s, %s, %s);"
-#                 , (datetime.today().strftime('%Y-%m-%d'), idid_data, score_data) )
+    if len(rows) == 0:
+        cur.execute("INSERT INTO score (date, id, score) VALUES (%s, %s, %s);"
+                , (datetime.today().strftime('%Y-%m-%d'), idid_data, score_data) )
 
-#     else :
-#         cur.execute("UPDATE score SET date=%s, score=%s WHERE id=%s;"
-#                 , (datetime.today().strftime('%Y-%m-%d'),score_data, idid_data) )
+    else :
+        cur.execute("UPDATE score SET date=%s, score=%s WHERE id=%s;"
+                , (datetime.today().strftime('%Y-%m-%d'),score_data, idid_data) )
 
 
-#     db.commit()
+    db.commit()
 
-#     responseBody = {
-#         "version": "2.0",
-#         "template": {
-#             "outputs": [
-#                 {
-#                     "simpleText": {
-#                         "text": "점수가 반영되었습니다.\n감사합니다."
-#                     }
-#                 }
-#             ]
-#         }
-#     }
+    responseBody = {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": "점수가 반영되었습니다.\n감사합니다."
+                    }
+                }
+            ]
+        }
+    }
 
-#     return responseBody
+    return responseBody
 
 # # # 오늘의 만족도
 # @app.route('/api/todayscore', methods=['POST'])
