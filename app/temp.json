@@ -1,0 +1,89 @@
+{
+    'bot': {
+        'id': '627deba39ac8ed7844169488!',
+        'name': '피자주문봇'
+    },
+    'intent': {
+        'id': '62807b5745b5fc310645f149',
+        'name': '사칙 연 
+        산 텍스트 응답 ', '
+        extra ': {'
+        reason ': {'
+        code ': 1, '
+        message ': '
+        OK '}}}, '
+        action ': {'
+        id ': '
+        6280853 f16b99e0c3381800a ', '
+        name ': '
+        단순 계산기 텍스트 응답 ', '
+        params ': {'
+        sys_number01 ': ' {
+            "amount": 10,
+            "unit": null
+        }
+        ', '
+        sys_number02 ': ' {
+            "amount": 10,
+            "unit": null
+        }
+        ', '
+        operators ': '
+        multiplication '}, '
+        detailParams ': {'
+        sys_number01 ': {'
+        groupName ': '
+        ', '
+        origin ': '
+        10 ', '
+        value ': ' {
+            "amount": 10,
+            "unit": null
+        }
+        '}, '
+        sys_number02 ': {'
+        groupName ': '
+        ', '
+        origin ': '
+        10 ', '
+        value ': ' {
+            "amount": 10,
+            "unit": null
+        }
+        '}, '
+        operators ': {'
+        groupName ': '
+        ', '
+        origin ': '
+        곱하기 ', '
+        value ': '
+        multiplication '}}, '
+        clientExtra ': {}}, '
+        userRequest ': {'
+        block ': {'
+        id ': '
+        62807 b5745b5fc310645f149 ', '
+        name ': '
+        사칙 연산 텍스트 응답 '}, '
+        user ': {'
+        id ': '
+        c7bbb643195214adda0ca02beb4a0401cafecbb7c3dbc9b0268aa017be9df71d1d ', '
+        type ': '
+        botUserKey ', '
+        properties ': {'
+        botUserKey ': '
+        c7bbb643195214adda0ca02beb4a0401cafecbb7c3dbc9b0268aa017be9df71d1d ', '
+        bot_user_key ': '
+        c7bbb643195214adda0ca02beb4a0401cafecbb7c3dbc9b0268aa017be9df71d1d '}}, '
+        utterance ': '
+        10 곱하기 10 을 계산해주세요\ n ', '
+        params ': {'
+        surface ': '
+        BuilderBotTest ', '
+        ignoreMe ': '
+        true '}, '
+        lang ': '
+        kr ', '
+        timezone ': '
+        Asia / Seoul '}, '
+        contexts ': []}
