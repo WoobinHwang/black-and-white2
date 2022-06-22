@@ -121,17 +121,20 @@ def submitnumber():
     # 컬럼 : userid, channel, score, turn, numbers, usenum, result
 
     cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND turn=0;" % (idid_data))
-    checkperson = cur.fetch()
+    checkperson = cur.fetchone()
     targetchannel = checkperson[1]
     channel_data = '%s' %targetchannel
     channelchannel_data = "'%s'" %targetchannel
 
+    # # 유저의 턴 확인
     cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s;" % (idid_data))
     rows = cur.fetchall()
 
+    # # 상대 유저의 턴 확인
     cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND userid!=%s;" % (channelchannel_data, idid_data))
     rows2 = cur.fetchall()
 
+    # # 해당 채널의 로우
     cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s;" % (channelchannel_data))
     rows3 = cur.fetchall()
 
@@ -156,6 +159,7 @@ def submitnumber():
                 {
                     "simpleText": {
                         "text": str(result) + number_data
+                        # "text": "테스트중"
                     }
                 }
             ]
