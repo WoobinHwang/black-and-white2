@@ -1,4 +1,3 @@
-from unittest import result
 from flask import Flask, request
 # import requests
 import psycopg2
@@ -18,7 +17,7 @@ cur=db.cursor()
 def hello_world():
     return 'welcome world4'
 
-@app.route('/api/hello')
+@app.route('/api/hello', methods=['POST'])
 def hello():
     body = request.get_json() # 사용자가 입력한 데이터
 
