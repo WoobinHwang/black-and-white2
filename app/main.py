@@ -110,20 +110,18 @@ def enterchannel():
 def submitnumber():
     body = request.get_json() # 사용자가 입력한 데이터
 
-    
     id_data = '%s' %str(body['userRequest']['user']['id'])
     idid_data = "'%s'" %str(body['userRequest']['user']['id'])
-    try :
-        text = body['userRequest']['utterance'].split(" ")[0]
-    except :
-        text = '0'
-        
-    # number_data = '%s' %text
-    
-    cur=db.cursor()
 
-    # userid, turn, numbers, usenum, result
-    # 컬럼 : userid, channel, score, turn, numbers, usenum, result
+    target_data = body['userRequest']['utterance']
+
+    if (target_data != '발화 내용'):
+        text = '0'
+    else:
+        text = target_data.split(" ")[0]
+
+        # userid, turn, numbers, usenum, result
+        # 컬럼 : userid, channel, score, turn, numbers, usenum, result
 
     # cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND turn=0;" % (idid_data))
     # checkperson = cur.fetchone()
@@ -139,7 +137,7 @@ def submitnumber():
     # id_data = '%s' %id_num
     # idid_data = "'%s'" %id_num
 
-    cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND turn=0;" % (idid_data))
+    cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND turn='0';" % (idid_data))
     rows = cur.fetchall()
 
     # print(rows[0][1])
@@ -179,7 +177,6 @@ def submitnumber():
                 {
                     "simpleText": {
                         "text": result
-                        # "text": "테스트중"
                     }
                 }
             ]
