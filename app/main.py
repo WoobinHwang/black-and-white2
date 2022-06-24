@@ -15,11 +15,11 @@ cur=db.cursor()
 
 @app.route('/')
 def hello_world():
-    return 'welcome world4'
+    return 'welcome world5'
 
 @app.route('/api/hello', methods=['POST'])
 def hello():
-    body = request.get_json() # 사용자가 입력한 데이터
+    # body = request.get_json() # 사용자가 입력한 데이터
 
     responseBody = {
         "version": "2.0",
@@ -148,10 +148,10 @@ def submitnumber():
 
     channelchannel_data = "'%s'" %userchannel
 
-    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND user=%s;" % (channelchannel_data, idid_data))
+    cur.execute("SELECT * FROM blackwhite2 WHERE user=%s AND channel=%s;" % (idid_data, channelchannel_data))
     user_rows = cur.fetchall()
 
-    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND user!=%s;" % (channelchannel_data, idid_data))
+    cur.execute("SELECT * FROM blackwhite2 WHERE user!=%s AND channel=%s;" % (idid_data, channelchannel_data))
     enemy_rows = cur.fetchall()
 
 
