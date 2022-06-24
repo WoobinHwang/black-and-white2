@@ -16,7 +16,7 @@ cur=db.cursor()
 
 @app.route('/')
 def hello_world():
-    return 'hello, humans!@'
+    return 'welcome world!!'
 
 
 # 유저가 입력 한 값 반환
