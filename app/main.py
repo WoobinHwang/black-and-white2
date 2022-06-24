@@ -16,7 +16,25 @@ cur=db.cursor()
 
 @app.route('/')
 def hello_world():
-    return 'welcome world3'
+    return 'welcome world4'
+
+@app.route('/hello')
+def hello():
+
+    responseBody = {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": "시작하셔도 됩니다."
+                    }
+                }
+            ]
+        }
+    }
+
+    return responseBody
 
 
 # 유저가 입력 한 값 반환
@@ -124,23 +142,27 @@ def submitnumber():
     # # 컬럼 : userid, channel, score, turn, numbers, usenum, result
 
     cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND turn='0';" % (idid_data))
-    user_rows = cur.fetchall()
+    find_channel = cur.fetchall()
 
-    userchannel = user_rows[0][1]
+    userchannel = find_channel[0][1]
 
     channelchannel_data = "'%s'" %userchannel
+
+    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND user=%s;" % (channelchannel_data, idid_data))
+    user_rows = cur.fetchall()
 
     cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND user!=%s;" % (channelchannel_data, idid_data))
     enemy_rows = cur.fetchall()
 
 
-    if len(user_rows) > len(enemy_rows):
-        result = "상대방의 차례입니다 기다려주세요."
-    else :
-        result = "예외상황"
+
+    # if len(user_rows) > len(enemy_rows):
+    #     result = "상대방의 차례입니다 기다려주세요."
+    # else :
+    #     result = "예외상황"
 
 
-
+    result = "유저: %s, 상대: %s" %(len(user_rows), len(enemy_rows))
     
 
 
