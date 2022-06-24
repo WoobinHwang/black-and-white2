@@ -145,12 +145,7 @@ def submitnumber():
     find_channel = cur.fetchall()
 
     userchannel = find_channel[0][1]
-
     channelchannel_data = "'%s'" %(userchannel)
-
-    # cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s;" % (channelchannel_data))
-    # channel_rows = cur.fetchall()
-    # result = "%s" %(str(channel_rows))
 
     cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND channel=%s;" % (idid_data, channelchannel_data))
     user_rows = cur.fetchall()
@@ -158,7 +153,11 @@ def submitnumber():
     cur.execute("SELECT * FROM blackwhite2 WHERE userid!=%s AND channel=%s;" % (idid_data, channelchannel_data))
     enemy_rows = cur.fetchall()
 
-    result = "유저: %s, 상대: %s" %(len(user_rows), len(enemy_rows))
+
+    if (len(user_rows) > len(enemy_rows)):
+        result = "상대방의 차례입니다."
+    else :
+        result = "타겟 상황"
     
 
     responseBody = {
