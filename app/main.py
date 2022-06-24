@@ -146,24 +146,20 @@ def submitnumber():
 
     userchannel = find_channel[0][1]
 
-    channelchannel_data = "'%s'" %userchannel
+    channelchannel_data = "'%s'" %(userchannel)
 
-    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s;" % (channelchannel_data))
-    channel_rows = cur.fetchall()
+    # cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s;" % (channelchannel_data))
+    # channel_rows = cur.fetchall()
+    # result = "%s" %(str(channel_rows))
 
-    result = "%s" %(str(channel_rows))
+    cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND channel=%s;" % (idid_data, channelchannel_data))
+    user_rows = cur.fetchall()
 
-    # cur.execute("SELECT * FROM blackwhite2 WHERE user=%s AND channel=%s;" % (idid_data, channelchannel_data))
-    # user_rows = cur.fetchall()
+    cur.execute("SELECT * FROM blackwhite2 WHERE userid!=%s AND channel=%s;" % (idid_data, channelchannel_data))
+    enemy_rows = cur.fetchall()
 
-    # cur.execute("SELECT * FROM blackwhite2 WHERE user!=%s AND channel=%s;" % (idid_data, channelchannel_data))
-    # enemy_rows = cur.fetchall()
-
-    # result = "유저: %s, 상대: %s" %(len(user_rows), len(enemy_rows))
+    result = "유저: %s, 상대: %s" %(len(user_rows), len(enemy_rows))
     
-
-
-    # result = userchannel
 
     responseBody = {
         "version": "2.0",
