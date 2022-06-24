@@ -18,8 +18,9 @@ cur=db.cursor()
 def hello_world():
     return 'welcome world4'
 
-@app.route('/hello')
+@app.route('/api/hello')
 def hello():
+    body = request.get_json() # 사용자가 입력한 데이터
 
     responseBody = {
         "version": "2.0",
