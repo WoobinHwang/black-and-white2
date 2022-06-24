@@ -16,7 +16,7 @@ cur=db.cursor()
 
 @app.route('/')
 def hello_world():
-    return 'welcome world2'
+    return 'welcome world3'
 
 
 # 유저가 입력 한 값 반환
@@ -130,7 +130,7 @@ def submitnumber():
 
     channelchannel_data = "'%s'" %userchannel
 
-    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND user!=%s;" %channelchannel_data, idid_data)
+    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND user!=%s;" % (channelchannel_data, idid_data))
     enemy_rows = cur.fetchall()
 
 
