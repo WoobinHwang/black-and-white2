@@ -116,7 +116,7 @@ def submitnumber():
     try :
         text = body['userRequest']['utterance'].split(" ")[0]
     except :
-        text = 0
+        text = '0'
         
     number_data = '%s' %text
     
