@@ -120,55 +120,31 @@ def submitnumber():
     else:
         text = target_data.split(" ")[0]
 
-        # userid, turn, numbers, usenum, result
-        # 컬럼 : userid, channel, score, turn, numbers, usenum, result
-
-    # cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND turn=0;" % (idid_data))
-    # checkperson = cur.fetchone()
-    # targetchannel = checkperson[1]
-    # channel_data = '%s' %targetchannel
-    # channelchannel_data = "'%s'" %targetchannel
-
-    # # # 유저의 턴 확인
-    # cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s;" % (idid_data))
-    # rows = cur.fetchall()
-
-    # id_num = '542751'
-    # id_data = '%s' %id_num
-    # idid_data = "'%s'" %id_num
+    # # userid, turn, numbers, usenum, result
+    # # 컬럼 : userid, channel, score, turn, numbers, usenum, result
 
     cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND turn='0';" % (idid_data))
-    rows = cur.fetchall()
+    user_rows = cur.fetchall()
 
-    # print(rows[0][1])
-    # print(len(rows))
+    userchannel = user_rows[0][1]
 
-    userchannel = rows[0][1]
-    
+    channelchannel_data = "'%s'" %userchannel
+
+    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND user!=%s;" %channelchannel_data, idid_data)
+    enemy_rows = cur.fetchall()
 
 
-
-    # # # 상대 유저의 턴 확인
-    # cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND userid!=%s;" % (channelchannel_data, idid_data))
-    # rows2 = cur.fetchall()
-
-    # # # 해당 채널의 로우
-    # cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s;" % (channelchannel_data))
-    # rows3 = cur.fetchall()
-
-    # result = len(rows3)
-
-    # if len(rows) > len(rows2):
-    #     result = "상대방의 차례입니다 기다려주세요."
-    # elif len(rows) == 0:
-    #     print("")
+    if len(user_rows) > len(enemy_rows):
+        result = "상대방의 차례입니다 기다려주세요."
+    else :
+        result = "예외상황"
 
 
 
     
 
 
-    result = userchannel
+    # result = userchannel
 
     responseBody = {
         "version": "2.0",
