@@ -131,19 +131,34 @@ def submitnumber():
     channel_data = '%s' %targetchannel
     channelchannel_data = "'%s'" %targetchannel
 
-    # # 유저의 턴 확인
+    # # # 유저의 턴 확인
+    # cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s;" % (idid_data))
+    # rows = cur.fetchall()
+
+    # id_num = '542751'
+    # id_data = '%s' %id_num
+    # idid_data = "'%s'" %id_num
+
     cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s;" % (idid_data))
     rows = cur.fetchall()
 
-    # # 상대 유저의 턴 확인
-    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND userid!=%s;" % (channelchannel_data, idid_data))
-    rows2 = cur.fetchall()
+    # print(rows[0][1])
+    # print(len(rows))
 
-    # # 해당 채널의 로우
-    cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s;" % (channelchannel_data))
-    rows3 = cur.fetchall()
+    userchannel = rows[0][1]
+    
 
-    result = len(rows3)
+
+
+    # # # 상대 유저의 턴 확인
+    # cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s AND userid!=%s;" % (channelchannel_data, idid_data))
+    # rows2 = cur.fetchall()
+
+    # # # 해당 채널의 로우
+    # cur.execute("SELECT * FROM blackwhite2 WHERE channel=%s;" % (channelchannel_data))
+    # rows3 = cur.fetchall()
+
+    # result = len(rows3)
 
     # if len(rows) > len(rows2):
     #     result = "상대방의 차례입니다 기다려주세요."
@@ -155,7 +170,7 @@ def submitnumber():
     
 
 
-    
+    result = userchannel
 
     responseBody = {
         "version": "2.0",
@@ -163,7 +178,7 @@ def submitnumber():
             "outputs": [
                 {
                     "simpleText": {
-                        "text": str(result) + number_data
+                        "text": result
                         # "text": "테스트중"
                     }
                 }
