@@ -15,7 +15,7 @@ cur=db.cursor()
 
 @app.route('/')
 def hello_world():
-    return 'welcome world5'
+    return 'welcome world6'
 
 @app.route('/api/hello', methods=['POST'])
 def hello():
@@ -175,7 +175,7 @@ def submitnumber():
     
 
 
-    result = len(user_last_rows)
+    result = len(enemy_last_rows)
 
     responseBody = {
         "version": "2.0",
