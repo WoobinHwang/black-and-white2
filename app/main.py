@@ -200,7 +200,8 @@ def submitnumber():
                 # # 상대 패배로 입력
                 cur.execute("UPDATE blackwhite3 SET result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % (where_round_loser, idid_data, channelchannel_data, where_enemy_turn))
                 db.commit()
-                result = "당신이 승리하였습니다!"
+                
+                result = "%s라운드 제출 완료!\n당신이 승리하였습니다!!!"%(user_last_rows[3] + 1)
 
             # # 상대방이 승리 할 경우
             elif (user_num < enemy_num):
@@ -210,7 +211,7 @@ def submitnumber():
                 # # # 상대 승리로 입력
                 cur.execute("UPDATE blackwhite3 SET score=%s , result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % ( enemy_last_rows[2]+1, where_round_winner, idid_data, channelchannel_data, input_enemy_turn))
                 db.commit()
-                result = "상대방이 승리하였습니다!"
+                result = "%s라운드 제출 완료!\n상대방이 승리하였습니다..." %(user_last_rows[3] + 1)
 
             # # 무승부인 상황
             elif (user_num == enemy_num):
