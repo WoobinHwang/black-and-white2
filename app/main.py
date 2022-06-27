@@ -132,7 +132,7 @@ def submitnumber():
 
     target_data = body['userRequest']['utterance']
 
-    if (target_data != '발화 내용'):
+    if (target_data == '발화 내용'):
         text = '0'
     else:
         text = target_data.split(" ")[0]
