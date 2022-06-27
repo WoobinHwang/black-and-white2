@@ -165,10 +165,10 @@ def submitnumber():
     if (len(enemy_rows) == 0):
             result = "상대방이 없습니다."
     # # 보유 포인트보다 더 많이 제출하려고 할 때
-    elif (user_last_rows[4] - int(text) < 0) or (int(text) < 0) :
+    elif (user_last_rows[4]-int(text) < 0) or (int(text) < 0) :
         result = "현재 남은 포인트는 %d개입니다.\n다시 제출하세요."
     else:
-        result = "first 상황"
+        result = "리스트: %d\n포인트: %d\n text: %d" %(len(user_last_rows), user_last_rows[4], int(text))
         # # 숫자 정상적으로 제출
         # if(len(user_rows) == len(enemy_rows)) :
         #     # # 길이가 같을 때 입력한 사람이 제출
