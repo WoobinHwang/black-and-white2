@@ -315,7 +315,7 @@ def infomation():
     enemy_last_rows = cur.fetchone()
 
     # # 상대 포인트
-    num_light = divmod((enemy_last_rows[5]-1), 20)[0] + 1
+    num_light = divmod((enemy_last_rows[4]-1), 20)[0] + 1
     first_range = 1 + (num_light-1) * 20
     second_range = 20 + (num_light-1) * 20
     if (num_light <= 1):
