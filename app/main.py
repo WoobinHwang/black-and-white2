@@ -125,6 +125,10 @@ def submitnumber():
 
     id_data = '%s' %str(body['userRequest']['user']['id'])
     idid_data = "'%s'" %str(body['userRequest']['user']['id'])
+    round_winner = '%s' %("승리")
+    round_loser = '%s' %("패배")
+    round_draw = '%s' %("무승부")
+
 
     target_data = body['userRequest']['utterance']
 
@@ -148,39 +152,66 @@ def submitnumber():
     cur.execute("SELECT * FROM blackwhite2 WHERE userid!=%s AND channel=%s;" % (idid_data, channelchannel_data))
     enemy_rows = cur.fetchall()
 
+    # input_user_turn = '%s' %(len(user_rows))
+    where_user_turn = "'%s'" %(len(user_rows)-1)
+    where_enemy_turn = "'%s'" %(len(enemy_rows)-1)
+
+    cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_user_turn))
+    user_last_rows = cur.fetchone()
+
+    cur.execute("SELECT * FROM blackwhite2 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
+    enemy_last_rows = cur.fetchone()
+    
     if (len(enemy_rows) == 0):
-        result = "상대방이 없습니다."
-    elif(len(user_rows) == len(enemy_rows)) :
-    
-        input_user_turn = '%s' %(len(user_rows))
-        where_user_turn = "'%s'" %(len(user_rows)-1)
-        where_enemy_turn = "'%s'" %(len(enemy_rows)-1)
+            result = "상대방이 없습니다."
 
-        cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_user_turn))
-        user_last_rows = cur.fetchone()
+    # # 보유 포인트보다 더 많이 제출하려고 할 때
+    if (user_last_rows[4] - int(text) < 0):
+        result = "현재 남은 포인트는 %d개입니다.\n다시 제출하세요."
+    else:
+        # # 숫자 정상적으로 제출
+        if(len(user_rows) == len(enemy_rows)) :
+            # # 길이가 같을 때 입력한 사람이 제출
+            cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
+                , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, 200 - int(text), int(text)) )
+            db.commit()
+            result = "%s라운드 제출 완료!" %(user_last_rows[3] + 1)
+        elif(len(user_rows) > len(enemy_rows)):
+            result = "상대방이 제출 할 차례입니다."
+        elif(len(user_rows) < len(enemy_rows)):
 
-        cur.execute("SELECT * FROM blackwhite2 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
-        enemy_last_rows = cur.fetchone()
+            # # 양쪽 다 제출했으니 숫자를 비교 할 예정
+            enemy_num = enemy_last_rows[5]
+            user_num = int(text)
 
-        # # 제출
-        cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
-            , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, 200 - int(text), int(text)) )
-        db.commit()
+            # # 제출 한 사람이 승리 할 경우
+            if (user_num > enemy_num):
+                # # 유저 승리로 입력
+                cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum, result) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+                    , (id_data, channel_data, user_last_rows[2] + 1, user_last_rows[3] + 1, 200 - int(text), int(text)), round_winner )
+                # # 상대 패배로 입력
+                cur.execute("UPDATE blackwhite2 SET result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % (round_loser, idid_data, channelchannel_data, where_enemy_turn))
+                db.commit()
+                result = "당신이 승리하였습니다!"
+            # # 상대방이 승리 할 경우
+            elif (user_num < enemy_num):
+                # # 유저 패배로 입력
+                cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum, result) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+                    , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, 200 - int(text), int(text)), round_loser )
+                # # 상대 승리로 입력
+                cur.execute("UPDATE blackwhite2 SET score=%s , result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % ( enemy_last_rows[2]+1, round_winner, idid_data, channelchannel_data, where_enemy_turn))
+                db.commit()
+                result = "상대방이 승리하였습니다!"
+            # # 무승부인 상황
+            elif (user_num == enemy_num):
+                cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum, result) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+                    , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, 200 - int(text), int(text)), round_draw)
+                # # 상대 승리로 입력
+                cur.execute("UPDATE blackwhite2 SET score=%s , result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % ( enemy_last_rows[2], round_draw, idid_data, channelchannel_data, where_enemy_turn))
+                db.commit()
+                result = "무승부입니다!\n선 플레이어부터 다시 시작해주세요."
 
-        # 유저가 길이가 적기때문에 입력해야하는 상황
-        # cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
-        #     , (id_data, channel_data, user_last_rows[2], , 200, text) )
-
-        result = "유저가 제출하는 상황"
-
-
-        # # 사용컬럼 : userid, turn, numbers, usenum, result
-        # # 컬럼 : userid, channel, score, turn, numbers, usenum, result
-
-    
-
-
-    # result = len(enemy_last_rows)
+    # result = 
 
     responseBody = {
         "version": "2.0",
