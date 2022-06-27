@@ -314,6 +314,8 @@ def infomation():
     cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
     enemy_last_rows = cur.fetchone()
 
+    # # 타일종류
+    
     # # 상대 포인트
     num_light = divmod((enemy_last_rows[4]-1), 20)[0] + 1
     first_range = 1 + (num_light-1) * 20
@@ -324,9 +326,24 @@ def infomation():
         second_range = 20
     # # 서로 제출을 안 한 상태에서
     # # 가지고있는 포인트, 점수
-    if (len(user_rows) == len(enemy_rows)):
-        result = "점수\n'나' %s : %s '상대'\n내가 가진 포인트량: %s\n상대가 가진 포인트량: %s번째 전등에 불이 켜져있으며\n%s ~ %s 의 범위에 해당합니다" %(user_last_rows[2], enemy_last_rows[2], user_last_rows[4], num_light, first_range, second_range)
-    
+    result = "점수\n'나' %s : %s '상대'\n내가 가진 포인트량: %s\n상대가 가진 포인트량: %s번째 전등에 불이 켜져있으며\n%s ~ %s 의 범위에 해당합니다" %(user_last_rows[2], enemy_last_rows[2], user_last_rows[4], num_light, first_range, second_range)
+    if (len(user_rows) > len(enemy_rows)):
+
+        if(user_last_rows[5] >= 10):
+            tile = "흰색"
+        else:
+            tile = "검은색"
+
+        result = result + "\n'나'는 %s 타일을 제출하였습니다"
+    elif (len(user_rows) < len(enemy_rows)):
+
+        if(enemy_last_rows[5] >= 10):
+            tile = "흰색"
+        else:
+            tile = "검은색"
+
+        result = result + "\n'상대'는 %s 타일을 제출하였습니다"
+
 
 
     responseBody = {
