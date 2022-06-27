@@ -162,9 +162,10 @@ def submitnumber():
         cur.execute("SELECT * FROM blackwhite2 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
         enemy_last_rows = cur.fetchone()
 
-        # # 입력
+        # # 제출
         cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
             , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, 200 - int(text), int(text)) )
+        db.commit()
 
         # 유저가 길이가 적기때문에 입력해야하는 상황
         # cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
@@ -179,7 +180,7 @@ def submitnumber():
     
 
 
-    result = len(enemy_last_rows)
+    # result = len(enemy_last_rows)
 
     responseBody = {
         "version": "2.0",
