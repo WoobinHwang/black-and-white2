@@ -200,9 +200,8 @@ def submitnumber():
                 # # 유저 승리로 입력
                 cur.execute("INSERT INTO blackwhite3 (userid, channel, score, turn, numbers, usenum, result) VALUES (%s, %s, %s, %s, %s, %s, %s);"
                     , (id_data, channel_data, user_last_rows[2] + 1, user_last_rows[3] + 1, user_last_rows[4] - int(text), int(text), round_winner ))
-                db.commit()
                 # # 상대 패배로 입력
-                cur.execute("UPDATE blackwhite3 SET result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % (round_loser, idid_data, channelchannel_data, where_enemy_turn))
+                cur.execute("UPDATE blackwhite3 SET result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % (where_round_loser, idid_data, channelchannel_data, where_enemy_turn))
                 db.commit()
                 result = "당신이 승리하였습니다!"
 
@@ -220,7 +219,6 @@ def submitnumber():
             elif (user_num == enemy_num):
                 cur.execute("INSERT INTO blackwhite3 (userid, channel, score, turn, numbers, usenum, result) VALUES (%s, %s, %s, %s, %s, %s, %s);"
                     , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, user_last_rows[4] - int(text), int(text), round_draw))
-                db.commit()
                 # # 상대 무승부 입력
                 cur.execute("UPDATE blackwhite3 SET result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % (where_round_draw, idid_data, channelchannel_data, where_enemy_turn))
                 db.commit()
