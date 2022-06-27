@@ -247,3 +247,37 @@ def submitnumber():
     }
 
     return responseBody
+
+
+
+
+# # 채널 초기화
+@app.route('/api/initializing', methods=['POST'])
+def initializing():
+    body = request.get_json() # 사용자가 입력한 데이터
+
+    
+    id_data = '%s' %str(body['userRequest']['user']['id'])
+    idid_data = "'%s'" %str(body['userRequest']['user']['id'])
+    
+
+    cur.execute("DELETE FROM blackwhite3 WHERE userid=%s;" %(idid_data))
+    db.commit()
+    result = "모든 채널에 있던 데이터들을 삭제하였습니다."
+    
+
+
+    responseBody = {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": result
+                    }
+                }
+            ]
+        }
+    }
+
+    return responseBody

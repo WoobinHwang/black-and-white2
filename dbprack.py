@@ -12,7 +12,8 @@ where_turn = '%s' %(3)
 
 
 # # # 상대 승리로 입력
-cur.execute("UPDATE blackwhite3 SET score=%s , result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % ( input_score, input_result, where_id, where_channel, where_turn))
+# cur.execute("UPDATE blackwhite3 SET score=%s , result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % ( input_score, input_result, where_id, where_channel, where_turn))
+cur.execute("DELETE FROM blackwhite3 WHERE userid=%s;" %(where_id))
 db.commit()
-result = "상대방이 승리하였습니다!"
+result = "삭제완료!"
 print(result)
