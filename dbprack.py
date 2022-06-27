@@ -1,3 +1,10 @@
-text = "200 제출합니다"
-strlist = text.split(" ")
-print(strlist)
+
+from ast import Num
+from cgitb import text
+
+
+text = '37'
+print(text)
+print(type(text))
+numtex = int(text)
+print(type(numtex))
