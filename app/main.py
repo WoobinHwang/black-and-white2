@@ -333,16 +333,14 @@ def infomation():
             tile = "흰색"
         else:
             tile = "검은색"
+        result = result + "\n'나'는 %s 타일을 제출하였습니다" %(tile)
 
-        result = result + "\n'나'는 %s 타일을 제출하였습니다"
     elif (len(user_rows) < len(enemy_rows)):
-
         if(enemy_last_rows[5] >= 10):
             tile = "흰색"
         else:
             tile = "검은색"
-
-        result = result + "\n'상대'는 %s 타일을 제출하였습니다"
+        result = result + "\n'상대'는 %s 타일을 제출하였습니다" %(tile)
 
 
 
