@@ -192,7 +192,7 @@ def submitnumber():
             # # # 양쪽 다 제출했으니 숫자를 비교 할 예정
             # enemy_num = enemy_last_rows[5]
 
-            result = "상대길이: %d" %len(enemy_last_rows)
+            result = "상대길이: %s" %len(enemy_last_rows)
 
             # user_num = int(text)
             # result = "내 숫자: %s\n상대 숫자: %s" %(user_num, enemy_num)

@@ -1,10 +1,6 @@
 
-from ast import Num
-from cgitb import text
+strlist = (1, 2, 3, 4, 5)
+# print(type(strlist))
+print(len(strlist))
 
-
-text = '37'
-print(text)
-print(type(text))
-numtex = int(text)
-print(type(numtex))
+print(strlist[1])
