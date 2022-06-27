@@ -157,7 +157,7 @@ def submitnumber():
     enemy_rows = cur.fetchall()
 
     input_user_turn = '%s' %(len(user_rows))
-    input_enemy_turn = '%s' %(len(enemy_rows))
+    input_enemy_turn = '%s' %(len(enemy_rows)-1)
     where_user_turn = "'%s'" %(len(user_rows)-1)
     where_enemy_turn = "'%s'" %(len(enemy_rows)-1)
 
@@ -208,7 +208,7 @@ def submitnumber():
                 cur.execute("INSERT INTO blackwhite3 (userid, channel, score, turn, numbers, usenum, result) VALUES (%s, %s, %s, %s, %s, %s, %s);"
                     , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, user_last_rows[4] - int(text), int(text), round_loser ))
                 # # # 상대 승리로 입력
-                cur.execute("UPDATE blackwhite3 SET score=%s , result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % ( enemy_last_rows[2]+1, where_round_winner, idid_data, channelchannel_data, input_enemy_turn))
+                cur.execute("UPDATE blackwhite3 SET score=%s , result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % ( enemy_last_rows[2]+1, where_round_winner, idid_data, channelchannel_data, where_enemy_turn))
                 db.commit()
                 result = "%s라운드 제출 완료!\n상대방이 승리하였습니다...\n현재점수 본인 %s : %s 상대방" %(user_last_rows[3] + 1, user_last_rows[2], enemy_last_rows[2]+1)
 
