@@ -95,17 +95,12 @@ def enterchannel():
     elif len(rows3) != 0:
         result = "이미 다른 채널에 접속중이십니다"
     elif len(rows) < 2:
-        # cur.execute("INSERT INTO score (date, id, score) VALUES (%s, %s, %s);"
         cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
-            # , (idid_data, score_data) )
             , (id_data, channel_data, 0, 0, 200, 0) )
         db.commit()
         result = "채널에 참가하였습니다"
     else :
         result = "해당 채널에 이미 사람이 다 찼습니다."
-
-
-    
 
     responseBody = {
         "version": "2.0",
@@ -137,14 +132,14 @@ def submitnumber():
         text = '0'
     else:
         text = target_data.split(" ")[0]
-
-    # # userid, turn, numbers, usenum, result
-    # # 컬럼 : userid, channel, score, turn, numbers, usenum, result
+    
+    
 
     cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND turn='0';" % (idid_data))
     find_channel = cur.fetchall()
 
     userchannel = find_channel[0][1]
+    channel_data = '%s' %(userchannel)
     channelchannel_data = "'%s'" %(userchannel)
 
     cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND channel=%s;" % (idid_data, channelchannel_data))
@@ -153,12 +148,34 @@ def submitnumber():
     cur.execute("SELECT * FROM blackwhite2 WHERE userid!=%s AND channel=%s;" % (idid_data, channelchannel_data))
     enemy_rows = cur.fetchall()
 
-
-    if (len(user_rows) > len(enemy_rows)):
-        result = "상대방의 차례입니다."
-    else :
-        result = "타겟 상황"
+    if (len(enemy_rows) == 0):
+        result = "상대방이 없습니다."
+    elif(len(user_rows) == len(enemy_rows)) :
     
+        input_user_turn = '%s' %(len(user_rows))
+        where_user_turn = "'%s'" %(len(user_rows)-1)
+        where_enemy_turn = "'%s'" %(len(enemy_rows)-1)
+
+        cur.execute("SELECT * FROM blackwhite2 WHERE userid=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_user_turn))
+        user_last_rows = cur.fetchone()
+
+        cur.execute("SELECT * FROM blackwhite2 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
+        enemy_last_rows = cur.fetchone()
+
+        # 유저가 길이가 적기때문에 입력해야하는 상황
+        # cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
+        #     , (id_data, channel_data, user_last_rows[2], , 200, text) )
+
+        result = "유저가 제출하는 상황"
+
+
+        # # 사용컬럼 : userid, turn, numbers, usenum, result
+        # # 컬럼 : userid, channel, score, turn, numbers, usenum, result
+
+    
+
+
+    result = len(user_last_rows)
 
     responseBody = {
         "version": "2.0",
