@@ -1,3 +1,4 @@
+from collections import UserList
 from flask import Flask, request
 # import requests
 import psycopg2
@@ -171,8 +172,8 @@ def submitnumber():
     # # 문제없음
 
     else:
-
-        result = "내 길이: %d\n상대 길이: %d" %(len(user_rows), len(enemy_rows))
+        if (len(user_last_rows) == 7):
+            result = "내 길이: %d\n상대 길이: %d" %(len(user_rows), len(enemy_rows))
         
         # # # 숫자 정상적으로 제출
         # # # 길이가 같을 때 입력한 사람이 제출
