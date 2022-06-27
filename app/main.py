@@ -325,7 +325,7 @@ def infomation():
     # # 서로 제출을 안 한 상태에서
     # # 가지고있는 포인트, 점수
     if (len(user_rows) == len(enemy_rows)):
-        result = "점수\n'나' %s : %s '상대'\n내가 가진 포인트량: %s\n상대가 가진 포인트량: %s번째 전등에 불이 켜져있으며\n%s ~ %s 의 범위에 해당합니다" %(user_last_rows[2], enemy_last_rows[2], user_last_rows[4], first_range, second_range)
+        result = "점수\n'나' %s : %s '상대'\n내가 가진 포인트량: %s\n상대가 가진 포인트량: %s번째 전등에 불이 켜져있으며\n%s ~ %s 의 범위에 해당합니다" %(user_last_rows[2], enemy_last_rows[2], user_last_rows[4], num_light, first_range, second_range)
     
 
 
