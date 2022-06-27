@@ -168,23 +168,27 @@ def submitnumber():
     # # 보유 포인트보다 더 많이 제출하려고 할 때
     elif (user_last_rows[4]-int(text) < 0) or (int(text) < 0) :
         result = "현재 남은 포인트는 %d개입니다.\n다시 제출하세요." %(user_last_rows[4])
-    else:
-        
-        # # 숫자 정상적으로 제출
-        if(len(user_rows) == len(enemy_rows)) :
-            # # 길이가 같을 때 입력한 사람이 제출
-            cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
-                , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, 200 - int(text), int(text)) )
-            db.commit()
-            result = "%s라운드 제출 완료!" %(user_last_rows[3] + 1)
-        elif(len(user_rows) > len(enemy_rows)):
-            result = "상대방이 제출 할 차례입니다."
-        elif(len(user_rows) < len(enemy_rows)):
+    # # 문제없음
 
-            # # 양쪽 다 제출했으니 숫자를 비교 할 예정
-            enemy_num = enemy_last_rows[5]
-            user_num = int(text)
-            result = "길이: %d\n상대 숫자: %d\n 내 숫자: %d" %(len(enemy_rows), enemy_num, user_num)
+    else:
+
+        result = "내 길이: %d\n상대 길이: %d" %(len(user_rows), len(enemy_rows))
+        
+        # # # 숫자 정상적으로 제출
+        # # # 길이가 같을 때 입력한 사람이 제출
+        # if(len(user_rows) == len(enemy_rows)) :
+        #     cur.execute("INSERT INTO blackwhite2 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
+        #         , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, 200 - int(text), int(text)) )
+        #     db.commit()
+        #     result = "%s라운드 제출 완료!" %(user_last_rows[3] + 1)
+        # elif(len(user_rows) > len(enemy_rows)):
+        #     result = "상대방이 제출 할 차례입니다."
+        # elif(len(user_rows) < len(enemy_rows)):
+
+        #     # # 양쪽 다 제출했으니 숫자를 비교 할 예정
+        #     enemy_num = enemy_last_rows[5]
+        #     user_num = int(text)
+            
 
             # # # 제출 한 사람이 승리 할 경우
             # if (user_num > enemy_num):
