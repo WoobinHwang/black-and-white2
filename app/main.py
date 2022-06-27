@@ -1,4 +1,5 @@
 from collections import UserList
+from unittest import result
 from flask import Flask, request
 # import requests
 import psycopg2
@@ -264,6 +265,67 @@ def initializing():
     cur.execute("DELETE FROM blackwhite3 WHERE userid=%s;" %(idid_data))
     db.commit()
     result = "모든 채널에 있던 데이터들을 삭제하였습니다."
+    
+
+
+    responseBody = {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": result
+                    }
+                }
+            ]
+        }
+    }
+
+    return responseBody
+
+
+# # 중간에 현재 상황 알림
+@app.route('/api/infomation', methods=['POST'])
+def infomation():
+    body = request.get_json() # 사용자가 입력한 데이터
+
+    
+    id_data = '%s' %str(body['userRequest']['user']['id'])
+    idid_data = "'%s'" %str(body['userRequest']['user']['id'])
+    
+    cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND turn='0';" % (idid_data))
+    find_channel = cur.fetchall()
+
+    userchannel = find_channel[0][1]
+    channelchannel_data = "'%s'" %(userchannel)
+
+    cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND channel=%s;" % (idid_data, channelchannel_data))
+    user_rows = cur.fetchall()
+
+    cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s;" % (idid_data, channelchannel_data))
+    enemy_rows = cur.fetchall()
+
+    where_user_turn = "'%s'" %(len(user_rows)-1)
+    where_enemy_turn = "'%s'" %(len(enemy_rows)-1)
+
+    cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_user_turn))
+    user_last_rows = cur.fetchone()
+
+    cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
+    enemy_last_rows = cur.fetchone()
+
+    # # 상대 포인트
+    num_light = divmod((enemy_last_rows[5]-1), 20)[0] + 1
+    first_range = 1 + (num_light-1) * 20
+    second_range = 20 + (num_light-1) * 20
+    if (num_light <= 1):
+        num_light = 1
+        first_range = 0
+        second_range = 20
+    # # 서로 제출을 안 한 상태에서
+    # # 가지고있는 포인트, 점수
+    if (len(user_rows) == len(enemy_rows)):
+        result = "점수\n'나' %s : %s '상대'\n내가 가진 포인트량: %s\n상대가 가진 포인트량: %s번째 전등에 불이 켜져있으며\n%s ~ %s 의 범위에 해당합니다" %(user_last_rows[2], enemy_last_rows[2], user_last_rows[4], first_range, second_range)
     
 
 
