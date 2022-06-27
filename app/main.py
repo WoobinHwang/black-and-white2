@@ -129,6 +129,9 @@ def submitnumber():
     round_winner = '%s' %("win")
     round_loser = '%s' %("lose")
     round_draw = '%s' %("draw")
+    where_round_winner = "'%s'" %("win")
+    where_round_loser = "'%s'" %("lose")
+    where_round_draw = "'%s'" %("draw")
 
 
     target_data = body['userRequest']['utterance']
@@ -211,7 +214,7 @@ def submitnumber():
                 # # 여까지 정상
                 # db.commit()
                 # # # 상대 승리로 입력
-                cur.execute("UPDATE blackwhite3 SET score=%s , result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % ( enemy_last_rows[2]+1, round_winner, id_data, channel_data, input_enemy_turn))
+                cur.execute("UPDATE blackwhite3 SET score=%s , result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % ( enemy_last_rows[2]+1, where_round_winner, idid_data, channelchannel_data, input_enemy_turn))
                 db.commit()
                 result = "상대방이 승리하였습니다!"
 
