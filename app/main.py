@@ -185,12 +185,15 @@ def submitnumber():
         # elif(len(user_rows) > len(enemy_rows)):
         #     result = "상대방이 제출 할 차례입니다."
         if(len(user_rows) < len(enemy_rows)):
-            # # 여기까진 ㅇㅋ
+            
             # # user: 길이1 enemy: 길이2
+            # # 여기까진 ㅇㅋ
             # result = "상황1"
             # # # 양쪽 다 제출했으니 숫자를 비교 할 예정
-            enemy_num = enemy_last_rows[5]
-            result = "상대는 %s" %(enemy_num)
+            # enemy_num = enemy_last_rows[5]
+
+            result = "상대길이: %d" %len(enemy_last_rows)
+
             # user_num = int(text)
             # result = "내 숫자: %s\n상대 숫자: %s" %(user_num, enemy_num)
             
