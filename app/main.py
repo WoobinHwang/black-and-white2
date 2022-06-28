@@ -182,14 +182,21 @@ def submitnumber():
         else:
             
             # # 숫자 정상적으로 제출
+
+            if(len(user_rows) > len(enemy_rows) or user_last_rows[6] == 'second'):
+                result = "상대방이 제출 할 차례입니다."
             # # 길이가 같을 때 입력한 사람이 제출
-            if(len(user_rows) == len(enemy_rows)) :
+            elif(len(user_rows) == len(enemy_rows)) :
+
+                # if (user_last_rows[6] == 'second'):
+                #     result = "상대방의 차례입니다. 기다려주세요."
+
                 cur.execute("INSERT INTO blackwhite3 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
                     , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, user_last_rows[4] - int(text), int(text)) )
                 db.commit()
                 result = "%s라운드 제출 완료!" %(user_last_rows[3] + 1)
-            elif(len(user_rows) > len(enemy_rows)):
-                result = "상대방이 제출 할 차례입니다."
+            # elif(len(user_rows) > len(enemy_rows)):
+            #     result = "상대방이 제출 할 차례입니다."
             elif(len(user_rows) < len(enemy_rows)):
                 
                 
