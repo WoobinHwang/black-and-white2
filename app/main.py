@@ -1,5 +1,3 @@
-from collections import UserList
-from unittest import result
 from flask import Flask, request
 # import requests
 import psycopg2
