@@ -127,12 +127,12 @@ def submitnumber():
 
     id_data = '%s' %str(body['userRequest']['user']['id'])
     idid_data = "'%s'" %str(body['userRequest']['user']['id'])
-    round_winner = '%s' %("win")
-    round_loser = '%s' %("lose")
-    round_draw = '%s' %("draw")
-    where_round_winner = "'%s'" %("win")
-    where_round_loser = "'%s'" %("lose")
-    where_round_draw = "'%s'" %("draw")
+    round_winner = '%s' %("first")
+    round_loser = '%s' %("second")
+    # round_draw = '%s' %("draw")
+    where_round_winner = "'%s'" %("first")
+    where_round_loser = "'%s'" %("second")
+    # where_round_draw = "'%s'" %("draw")
 
 
     target_data = body['userRequest']['utterance']
@@ -226,9 +226,10 @@ def submitnumber():
                 # # 무승부인 상황
                 elif (user_num == enemy_num):
                     cur.execute("INSERT INTO blackwhite3 (userid, channel, score, turn, numbers, usenum, result) VALUES (%s, %s, %s, %s, %s, %s, %s);"
-                        , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, user_last_rows[4] - int(text), int(text), round_draw))
+                        , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, user_last_rows[4] - int(text), int(text), user_last_rows[6]))
                     # # 상대 무승부 입력
-                    cur.execute("UPDATE blackwhite3 SET result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % (where_round_draw, idid_data, channelchannel_data, where_enemy_turn))
+                    where_enemy_result = "'%s'" %(enemy_last_rows[6])
+                    cur.execute("UPDATE blackwhite3 SET result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % (where_enemy_result, idid_data, channelchannel_data, where_enemy_turn))
                     db.commit()
                     result = "무승부입니다!\n선 플레이어부터 다시 시작해주세요.\n현재점수 본인 %s : %s 상대방"%(user_last_rows[2], enemy_last_rows[2])
 
