@@ -10,13 +10,12 @@ id_data = '%s' %("woobin")
 idid_data = "'%s'" %("woobin")
 channel_data = '%s' %("korea")
 channelchannel_data = "'%s'" %("korea")
-where_user_turn = 1
+where_user_turn = 0
 text = '2'
 
 cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_user_turn))
 user_last_rows = cur.fetchone()
 # print(user_last_rows)
-# user_last_rows[2], user_last_rows[3] + 1, user_last_rows[4] - int(text), int(text), user_last_rows[6]
 
 
 cur.execute("INSERT INTO blackwhite3 (userid, channel, score, turn, numbers, usenum, result) VALUES (%s, %s, %s, %s, %s, %s, %s);"
