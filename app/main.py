@@ -343,20 +343,78 @@ def infomation():
         else:
             tile = "검은색"
         result = result + "\n'상대'는 %s 타일을 제출하였습니다" %(tile)
-    # elif (len(user_rows)==len(enemy_rows)) and (len(user_rows) > 2):
-    #     if (enemy_last_rows[5] >= 10):
-    #         tile = "흰색"
-    #     else :
-    #         tile = "검은색"
-    #     history = "지난 라운드에 상대는 %s 타일을 제출하였었고, " %(tile)
-    #     if (user_last_rows[5] > enemy_last_rows[5]):
-    #         history = history + "내가 이겼습니다.\n"
-    #     elif (user_last_rows[5] < enemy_last_rows[5]):
-    #         history = history + "상대방이 이겼습니다.\n"
-    #     else :
-    #         history = history + "비겼습니다.\n"
 
-    #     result = history + result
+
+    responseBody = {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": result
+                    }
+                }
+            ]
+        }
+    }
+
+    return responseBody
+
+
+
+
+# # 지난 결과 호출
+@app.route('/api/previous', methods=['POST'])
+def previous():
+    body = request.get_json() # 사용자가 입력한 데이터
+
+    
+    id_data = '%s' %str(body['userRequest']['user']['id'])
+    idid_data = "'%s'" %str(body['userRequest']['user']['id'])
+    
+    cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND turn='0';" % (idid_data))
+    find_channel = cur.fetchall()
+
+    userchannel = find_channel[0][1]
+    channelchannel_data = "'%s'" %(userchannel)
+
+    cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND channel=%s;" % (idid_data, channelchannel_data))
+    user_rows = cur.fetchall()
+
+    cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s;" % (idid_data, channelchannel_data))
+    enemy_rows = cur.fetchall()
+
+    where_user_turn = "'%s'" %(len(user_rows)-1)
+    where_enemy_turn = "'%s'" %(len(enemy_rows)-1)
+
+    cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_user_turn))
+    user_last_rows = cur.fetchone()
+
+    cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
+    enemy_last_rows = cur.fetchone()
+
+    if (len(user_rows) == 1) or (len(enemy_rows) == 1) :
+        result = "이전 라운드가 없습니다."
+    
+
+    # # 서로 제출을 안 한 상태에서
+    # # 가지고있는 포인트, 점수
+
+    # result = "점수\n'나' %s : %s '상대'\n내가 가진 포인트량: %s\n상대가 가진 포인트량: %s번째 전등에 불이 켜져있으며\n%s ~ %s 의 범위에 해당합니다" %(user_last_rows[2], enemy_last_rows[2], user_last_rows[4], num_light, first_range, second_range)
+    # if (len(user_rows) > len(enemy_rows)):
+
+    #     if(user_last_rows[5] >= 10):
+    #         tile = "흰색"
+    #     else:
+    #         tile = "검은색"
+    #     result = result + "\n'나'는 %s 타일을 제출하였습니다" %(tile)
+
+    # elif (len(user_rows) < len(enemy_rows)):
+    #     if(enemy_last_rows[5] >= 10):
+    #         tile = "흰색"
+    #     else:
+    #         tile = "검은색"
+    #     result = result + "\n'상대'는 %s 타일을 제출하였습니다" %(tile)
 
 
     responseBody = {
