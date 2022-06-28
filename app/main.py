@@ -1,3 +1,4 @@
+from collections import UserList
 from flask import Flask, request
 # import requests
 import psycopg2
@@ -393,28 +394,72 @@ def previous():
     cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
     enemy_last_rows = cur.fetchone()
 
+    # # 지난 라운드 결과
+    previous_result = user_last_rows[6]
+
+    # # 상대 타일 정의
+    if(enemy_last_rows[5] >= 10):
+        tile = "흰색"
+    else:
+        tile = "검은색"
+
+
     if (len(user_rows) == 1) or (len(enemy_rows) == 1) :
         result = "이전 라운드가 없습니다."
-    
+    elif (len(user_rows) == len(enemy_rows)) :
+        result = "현재 %s라운드 진행중이며\n지난 라운드에 상대방이 %s 타일을 제출하여 " %(len(user_rows), tile)
+        if (user_last_rows[5] > enemy_last_rows[5]):
+            result = result + "내가 이겼습니다."
+        elif (user_last_rows[5] == enemy_last_rows[5]):
+            result = result + "비겼습니다."
+        elif (user_last_rows[5] < enemy_last_rows[5]):
+            result = result + "상대가 이겼습니다."
 
-    # # 서로 제출을 안 한 상태에서
-    # # 가지고있는 포인트, 점수
+    # # 유저가 3 , 상대가 2의 상황
+    elif (len(user_rows) > len(enemy_rows)) :
 
-    # result = "점수\n'나' %s : %s '상대'\n내가 가진 포인트량: %s\n상대가 가진 포인트량: %s번째 전등에 불이 켜져있으며\n%s ~ %s 의 범위에 해당합니다" %(user_last_rows[2], enemy_last_rows[2], user_last_rows[4], num_light, first_range, second_range)
-    # if (len(user_rows) > len(enemy_rows)):
+        where_user_prev_turn = "'%s'" %(len(user_rows)-2)
 
-    #     if(user_last_rows[5] >= 10):
-    #         tile = "흰색"
-    #     else:
-    #         tile = "검은색"
-    #     result = result + "\n'나'는 %s 타일을 제출하였습니다" %(tile)
+        cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_user_prev_turn))
+        user_previous_rows = cur.fetchone()
+        
+        result = "현재 %s라운드 진행중이며\n지난 %s라운드에 상대방이 %s 타일을 제출하여 " %(len(user_rows), len(enemy_rows), tile)
+        
+        if (user_previous_rows[5] > enemy_last_rows[5]):
+            result = result + "내가 이겼습니다."
+        elif (user_previous_rows[5] == enemy_last_rows[5]):
+            result = result + "비겼습니다."
+        elif (user_previous_rows[5] < enemy_last_rows[5]):
+            result = result + "상대가 이겼습니다."
 
-    # elif (len(user_rows) < len(enemy_rows)):
-    #     if(enemy_last_rows[5] >= 10):
-    #         tile = "흰색"
-    #     else:
-    #         tile = "검은색"
-    #     result = result + "\n'상대'는 %s 타일을 제출하였습니다" %(tile)
+
+        # # 유저가 2 , 상대가 3의 상황
+    elif (len(user_rows) < len(enemy_rows)) :
+
+        where_enemy_prev_turn = "'%s'" %(len(enemy_rows)-2)
+
+        cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_prev_turn))
+        enemy_previous_rows = cur.fetchone()
+
+        # # 상대 타일 재정의
+        if(enemy_previous_rows[5] >= 10):
+            tile = "흰색"
+        else:
+            tile = "검은색"
+        
+        result = "현재 %s라운드 진행중이며\n지난 %s라운드에 상대방이 %s 타일을 제출하여 " %(len(enemy_rows), len(user_rows), tile)
+        
+        if (user_last_rows[5] > enemy_previous_rows[5]):
+            result = result + "내가 이겼습니다."
+        elif (user_last_rows[5] == enemy_previous_rows[5]):
+            result = result + "비겼습니다."
+        elif (user_last_rows[5] < enemy_previous_rows[5]):
+            result = result + "상대가 이겼습니다."
+
+    # # 결과에 점수 추가하여 마무리
+    result = result + "현재 점수\n'나' %s : %s '상대'" %(user_last_rows[2], enemy_last_rows[2])
+
+
 
 
     responseBody = {
