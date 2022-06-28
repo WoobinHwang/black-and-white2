@@ -11,7 +11,7 @@ idid_data = "'%s'" %("woobin")
 channel_data = '%s' %("korea")
 channelchannel_data = "'%s'" %("korea")
 where_user_turn = 1
-text = '0'
+text = '2'
 
 cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_user_turn))
 user_last_rows = cur.fetchone()
