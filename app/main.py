@@ -180,10 +180,7 @@ def submitnumber():
             result = "현재 남은 포인트는 %d개입니다.\n다시 제출하세요." %(user_last_rows[4])
 
         else:
-            
             # # 숫자 정상적으로 제출
-
-            
             # # 길이가 같을 때 입력한 사람이 제출
             if(len(user_rows) == len(enemy_rows)) :
                 if (user_last_rows[6] == 'second'):
@@ -332,6 +329,7 @@ def infomation():
         second_range = 20
     # # 서로 제출을 안 한 상태에서
     # # 가지고있는 포인트, 점수
+
     result = "점수\n'나' %s : %s '상대'\n내가 가진 포인트량: %s\n상대가 가진 포인트량: %s번째 전등에 불이 켜져있으며\n%s ~ %s 의 범위에 해당합니다" %(user_last_rows[2], enemy_last_rows[2], user_last_rows[4], num_light, first_range, second_range)
     if (len(user_rows) > len(enemy_rows)):
 
@@ -347,7 +345,20 @@ def infomation():
         else:
             tile = "검은색"
         result = result + "\n'상대'는 %s 타일을 제출하였습니다" %(tile)
+    elif (len(user_rows)==len(enemy_rows)) and (len(user_rows) > 2):
+        if (enemy_last_rows[5] >= 10):
+            tile = "흰색"
+        else :
+            tile = "검은색"
+        history = "지난 라운드에 상대는 %s 타일을 제출하였었고, " %(tile)
+        if (user_last_rows[5] > enemy_last_rows[5]):
+            history = history + "내가 이겼습니다.\n"
+        elif (user_last_rows[5] < enemy_last_rows[5]):
+            history = history + "상대방이 이겼습니다.\n"
+        else :
+            history = history + "비겼습니다.\n"
 
+        result = history + result
 
 
     responseBody = {
