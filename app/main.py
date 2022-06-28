@@ -457,7 +457,7 @@ def previous():
             result = result + "상대가 이겼습니다."
 
     # # 결과에 점수 추가하여 마무리
-    result = result + "현재 점수\n'나' %s : %s '상대'" %(user_last_rows[2], enemy_last_rows[2])
+    result = result + "\n현재 점수\n'나' %s : %s '상대'" %(user_last_rows[2], enemy_last_rows[2])
 
 
 
