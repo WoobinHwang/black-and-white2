@@ -1,4 +1,3 @@
-from collections import UserList
 from flask import Flask, request
 # import requests
 import psycopg2
@@ -128,10 +127,8 @@ def submitnumber():
     idid_data = "'%s'" %str(body['userRequest']['user']['id'])
     round_winner = '%s' %("first")
     round_loser = '%s' %("second")
-    # round_draw = '%s' %("draw")
     where_round_winner = "'%s'" %("first")
     where_round_loser = "'%s'" %("second")
-    # where_round_draw = "'%s'" %("draw")
 
 
     target_data = body['userRequest']['utterance']
@@ -156,8 +153,6 @@ def submitnumber():
     cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s;" % (idid_data, channelchannel_data))
     enemy_rows = cur.fetchall()
 
-    input_user_turn = '%s' %(len(user_rows))
-    input_enemy_turn = '%s' %(len(enemy_rows)-1)
     where_user_turn = "'%s'" %(len(user_rows)-1)
     where_enemy_turn = "'%s'" %(len(enemy_rows)-1)
 
@@ -393,9 +388,6 @@ def previous():
 
     cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
     enemy_last_rows = cur.fetchone()
-
-    # # 지난 라운드 결과
-    previous_result = user_last_rows[6]
 
     # # 상대 타일 정의
     if(enemy_last_rows[5] >= 10):
