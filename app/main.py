@@ -343,20 +343,20 @@ def infomation():
         else:
             tile = "검은색"
         result = result + "\n'상대'는 %s 타일을 제출하였습니다" %(tile)
-    elif (len(user_rows)==len(enemy_rows)) and (len(user_rows) > 2):
-        if (enemy_last_rows[5] >= 10):
-            tile = "흰색"
-        else :
-            tile = "검은색"
-        history = "지난 라운드에 상대는 %s 타일을 제출하였었고, " %(tile)
-        if (user_last_rows[5] > enemy_last_rows[5]):
-            history = history + "내가 이겼습니다.\n"
-        elif (user_last_rows[5] < enemy_last_rows[5]):
-            history = history + "상대방이 이겼습니다.\n"
-        else :
-            history = history + "비겼습니다.\n"
+    # elif (len(user_rows)==len(enemy_rows)) and (len(user_rows) > 2):
+    #     if (enemy_last_rows[5] >= 10):
+    #         tile = "흰색"
+    #     else :
+    #         tile = "검은색"
+    #     history = "지난 라운드에 상대는 %s 타일을 제출하였었고, " %(tile)
+    #     if (user_last_rows[5] > enemy_last_rows[5]):
+    #         history = history + "내가 이겼습니다.\n"
+    #     elif (user_last_rows[5] < enemy_last_rows[5]):
+    #         history = history + "상대방이 이겼습니다.\n"
+    #     else :
+    #         history = history + "비겼습니다.\n"
 
-        result = history + result
+    #     result = history + result
 
 
     responseBody = {
