@@ -486,3 +486,79 @@ def previous():
     }
 
     return responseBody
+
+
+
+
+# # 다 끝난 후 로그 보여주기
+@app.route('/api/checklog', methods=['POST'])
+def checklog():
+
+    try:
+        body = request.get_json() # 사용자가 입력한 데이터
+
+        idid_data = "'%s'" %str(body['userRequest']['user']['id'])
+        
+        cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND turn='0';" % (idid_data))
+        find_channel = cur.fetchall()
+
+        userchannel = find_channel[0][1]
+        channelchannel_data = "'%s'" %(userchannel)
+
+        cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND channel=%s;" % (idid_data, channelchannel_data))
+        user_rows = cur.fetchall()
+
+        cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s;" % (idid_data, channelchannel_data))
+        enemy_rows = cur.fetchall()
+        result = ""
+
+        ###
+        where_user_turn = "'%s'" %(len(user_rows)-1)
+        where_enemy_turn = "'%s'" %(len(enemy_rows)-1)
+
+        cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_user_turn))
+        user_last_rows = cur.fetchone()
+
+        cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
+        enemy_last_rows = cur.fetchone()
+        
+        # # 타겟지점
+        if (user_last_rows[2] >= 10) or (enemy_last_rows[2]>=10):
+            result = result + "로그보기"
+            for i in range(1, len(user_rows)):
+
+                where_user_turn = "'%s'" %(i)
+                where_enemy_turn = "'%s'" %(i)
+
+                cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_user_turn))
+                user_target_row = cur.fetchone()
+                cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
+                enemy_target_row = cur.fetchone()
+
+                result = result + "\n%s라운드 - 나 %s : %s 상대" %(i, user_target_row[5], enemy_target_row[5])
+        else:
+            result("아직 게임이 끝나지 않았습니다.")
+
+
+        ###
+
+        
+        
+    except:
+        result = "에러 발생"
+
+
+    responseBody = {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": result
+                    }
+                }
+            ]
+        }
+    }
+
+    return responseBody
