@@ -209,7 +209,7 @@ def submitnumber():
                         db.commit()
                         result = "%s라운드 제출 완료!\n당신이 승리하였습니다!!!\n현재점수 본인 %s : %s 상대방"%(user_last_rows[3] + 1, user_last_rows[2] + 1, enemy_last_rows[2])
                         if (user_last_rows[2]+1 >= 10):
-                            result = result + "'나'의 승리로 게임을 종료합니다."
+                            result = result + "\n'나'의 승리로 게임을 종료합니다."
 
                     # # 상대방이 승리 할 경우
                     elif (user_num < enemy_num):
@@ -222,7 +222,7 @@ def submitnumber():
                         result = "%s라운드 제출 완료!\n상대방이 승리하였습니다...\n현재점수 본인 %s : %s 상대방" %(user_last_rows[3] + 1, user_last_rows[2], enemy_last_rows[2]+1)
 
                         if (enemy_last_rows[2]+1 >= 10):
-                            result = result + "상대방의 승리로 게임을 종료합니다."
+                            result = result + "\n상대방의 승리로 게임을 종료합니다."
 
 
                     # # 무승부인 상황
@@ -538,7 +538,7 @@ def checklog():
                 result = result + "\n%d라운드 나 %s : %s 상대" %(i, user_target_row[5], enemy_target_row[5])
                 
         else:
-            result("아직 게임이 끝나지 않았습니다.")
+            result = ("아직 게임이 끝나지 않았습니다.")
 
 
         ###
