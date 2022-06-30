@@ -538,7 +538,7 @@ def checklog():
                 result = result + "\n%d라운드 나 %s : %s 상대" %(i, user_target_row[5], enemy_target_row[5])
                 
         else:
-            result = ("아직 게임이 끝나지 않았습니다.")
+            result = "아직 게임이 끝나지 않았습니다.\n게임이 끝난후에 이용하시기 바랍니다."
 
 
         ###
