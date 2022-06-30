@@ -535,7 +535,8 @@ def checklog():
                 cur.execute("SELECT * FROM blackwhite3 WHERE userid!=%s AND channel=%s AND turn=%s;" % (idid_data, channelchannel_data, where_enemy_turn))
                 enemy_target_row = cur.fetchone()
 
-                result = result + "\n%s라운드 - 나 %s : %s 상대" %(i, user_target_row[5], enemy_target_row[5])
+                result = result + "\n%d라운드 나 %s : %s 상대" %(i, user_target_row[5], enemy_target_row[5])
+                
         else:
             result("아직 게임이 끝나지 않았습니다.")
 
@@ -545,7 +546,7 @@ def checklog():
         
         
     except:
-        result = "에러 발생"
+        result = result + "에러 발생"
 
 
     responseBody = {
