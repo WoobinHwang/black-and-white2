@@ -105,6 +105,9 @@ def enterchannel():
     except:
         result = "에러 발생"
 
+    cur.close() # # cur 객체 연결 해제
+    db.close() # # db 인스턴스 연결 해제
+
     responseBody = {
         "version": "2.0",
         "template": {
@@ -237,6 +240,9 @@ def submitnumber():
     except:
         result = "에러 발생"
     
+    cur.close() # # cur 객체 연결 해제
+    db.close() # # db 인스턴스 연결 해제
+    
 
     responseBody = {
         "version": "2.0",
@@ -274,6 +280,9 @@ def initializing():
     except:
         result = "에러 발생"
 
+    cur.close() # # cur 객체 연결 해제
+    db.close() # # db 인스턴스 연결 해제
+    
 
     responseBody = {
         "version": "2.0",
@@ -354,6 +363,8 @@ def infomation():
     except:
         result = "에러 발생"
 
+    cur.close() # # cur 객체 연결 해제
+    db.close() # # db 인스턴스 연결 해제
 
     responseBody = {
         "version": "2.0",
@@ -470,7 +481,8 @@ def previous():
     except:
         result = "에러 발생"
 
-
+    cur.close() # # cur 객체 연결 해제
+    db.close() # # db 인스턴스 연결 해제
 
     responseBody = {
         "version": "2.0",
@@ -540,14 +552,11 @@ def checklog():
         else:
             result = "아직 게임이 끝나지 않았습니다.\n게임이 끝난후에 이용하시기 바랍니다."
 
-
-        ###
-
-        
-        
     except:
         result = result + "에러 발생"
 
+    cur.close() # # cur 객체 연결 해제
+    db.close() # # db 인스턴스 연결 해제
 
     responseBody = {
         "version": "2.0",
