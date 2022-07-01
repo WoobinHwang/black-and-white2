@@ -68,6 +68,10 @@ def test():
 # # 채널 접속
 @app.route('/api/enterchannel', methods=['POST'])
 def enterchannel():
+    passwd = '3efe88864056f4a63eeebc8a511d12675ce0c78e998192c9e0ab04438867195d'
+    db = psycopg2.connect(host='ec2-44-206-89-185.compute-1.amazonaws.com', dbname='d3bj01t0cv3v8b',user='qiulfncvkhhxhw',password= passwd,port=5432)
+    cur=db.cursor()
+
     try:
         body = request.get_json() # 사용자가 입력한 데이터
 
@@ -128,6 +132,9 @@ def enterchannel():
 # # 숫자 제출하기
 @app.route('/api/submitnumber', methods=['POST'])
 def submitnumber():
+    passwd = '3efe88864056f4a63eeebc8a511d12675ce0c78e998192c9e0ab04438867195d'
+    db = psycopg2.connect(host='ec2-44-206-89-185.compute-1.amazonaws.com', dbname='d3bj01t0cv3v8b',user='qiulfncvkhhxhw',password= passwd,port=5432)
+    cur=db.cursor()
 
     try:
     
@@ -308,6 +315,9 @@ def initializing():
 # # 중간에 현재 상황 알림
 @app.route('/api/infomation', methods=['POST'])
 def infomation():
+    passwd = '3efe88864056f4a63eeebc8a511d12675ce0c78e998192c9e0ab04438867195d'
+    db = psycopg2.connect(host='ec2-44-206-89-185.compute-1.amazonaws.com', dbname='d3bj01t0cv3v8b',user='qiulfncvkhhxhw',password= passwd,port=5432)
+    cur=db.cursor()
 
     try:
         body = request.get_json() # 사용자가 입력한 데이터
@@ -392,6 +402,9 @@ def infomation():
 # # 지난 결과 호출
 @app.route('/api/previous', methods=['POST'])
 def previous():
+    passwd = '3efe88864056f4a63eeebc8a511d12675ce0c78e998192c9e0ab04438867195d'
+    db = psycopg2.connect(host='ec2-44-206-89-185.compute-1.amazonaws.com', dbname='d3bj01t0cv3v8b',user='qiulfncvkhhxhw',password= passwd,port=5432)
+    cur=db.cursor()
 
     try:
     
@@ -510,6 +523,9 @@ def previous():
 # # 다 끝난 후 로그 보여주기
 @app.route('/api/checklog', methods=['POST'])
 def checklog():
+    passwd = '3efe88864056f4a63eeebc8a511d12675ce0c78e998192c9e0ab04438867195d'
+    db = psycopg2.connect(host='ec2-44-206-89-185.compute-1.amazonaws.com', dbname='d3bj01t0cv3v8b',user='qiulfncvkhhxhw',password= passwd,port=5432)
+    cur=db.cursor()
 
     try:
         body = request.get_json() # 사용자가 입력한 데이터
