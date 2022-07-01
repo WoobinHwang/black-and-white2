@@ -267,6 +267,10 @@ def submitnumber():
 @app.route('/api/initializing', methods=['POST'])
 def initializing():
 
+    passwd = '3efe88864056f4a63eeebc8a511d12675ce0c78e998192c9e0ab04438867195d'
+    db = psycopg2.connect(host='ec2-44-206-89-185.compute-1.amazonaws.com', dbname='d3bj01t0cv3v8b',user='qiulfncvkhhxhw',password= passwd,port=5432)
+    cur=db.cursor()
+
     try:
         body = request.get_json() # 사용자가 입력한 데이터
 
