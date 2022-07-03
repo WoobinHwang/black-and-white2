@@ -22,6 +22,8 @@ def hello_world():
 def hello():
     # body = request.get_json() # 사용자가 입력한 데이터
 
+    import psycopg2
+
     responseBody = {
         "version": "2.0",
         "template": {
@@ -245,7 +247,7 @@ def submitnumber():
                         cur.execute("UPDATE blackwhite3 SET result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % (where_enemy_result, idid_data, channelchannel_data, where_enemy_turn))
                         db.commit()
                         result = "무승부입니다!\n선 플레이어부터 다시 시작해주세요.\n현재점수 나 %s : %s 상대방"%(user_last_rows[2], enemy_last_rows[2])
-                        result = "무승부네요??"
+                        # result = "무승부네요??"
     except:
         result = "에러 발생"
     
