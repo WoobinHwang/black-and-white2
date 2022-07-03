@@ -28,7 +28,7 @@ turn_data = "'%s'" %'0'
 
     # 테이블명 : blackwhite2
     # 컬럼 : userid, channel, score, turn, numbers, usenum, result
-cur.execute("CREATE TABLE IF NOT EXISTS blackwhite3 (userid varchar, channel varchar, score int, turn int, numbers int, usenum int, result varchar);")
+# cur.execute("CREATE TABLE IF NOT EXISTS blackwhite3 (userid varchar, channel varchar, score int, turn int, numbers int, usenum int, result varchar);")
 
 # cur.execute("INSERT INTO blackwhite3 (userid, channel, score, turn, numbers, usenum) VALUES (%s, %s, %s, %s, %s, %s);"
 #             , ("woob", "korea", 0, 3, 200, 0) )
