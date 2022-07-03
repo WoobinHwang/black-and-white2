@@ -242,9 +242,10 @@ def submitnumber():
                             , (id_data, channel_data, user_last_rows[2], user_last_rows[3] + 1, user_last_rows[4] - int(text), int(text), user_last_rows[6]))
                         # # 상대 무승부 입력
                         # where_enemy_result = "'%s'" %(enemy_last_rows[6])
-                        cur.execute("UPDATE blackwhite3 SET result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % (enemy_last_rows[6], idid_data, channelchannel_data, where_enemy_turn))
+                        # cur.execute("UPDATE blackwhite3 SET result=%s WHERE userid!=%s AND channel=%s AND turn=%s;" % (enemy_last_rows[6], idid_data, channelchannel_data, where_enemy_turn))
                         db.commit()
-                        result = "무승부입니다!\n선 플레이어부터 다시 시작해주세요.\n현재점수 본인 %s : %s 상대방"%(user_last_rows[2], enemy_last_rows[2])
+                        result = "무승부입니다!\n선 플레이어부터 다시 시작해주세요.\n현재점수 나 %s : %s 상대방"%(user_last_rows[2], enemy_last_rows[2])
+                        result = "무승부네요??"
     except:
         result = "에러 발생"
     
