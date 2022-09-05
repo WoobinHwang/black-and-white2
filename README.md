@@ -3,3 +3,4 @@
 
 # 챗봇 검색 방법
 <img src="/C:/Users/human/Desktop/스짓 검색.jpg width="100px" height="50px" title="Github_Logo"/>
+</img>
