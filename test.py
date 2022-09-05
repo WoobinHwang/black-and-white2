@@ -11,7 +11,7 @@ cur=db.cursor()
 id_num = 'woobin'
 id_data = '%s' %id_num
 idid_data = "'%s'" %id_num
- 
+  
 turn_data = "'%s'" %'0'
 
 # cur.execute("SELECT * FROM blackwhite3 WHERE userid=%s;" % (idid_data))
