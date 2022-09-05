@@ -3,4 +3,4 @@
 
 # 챗봇 검색 방법
 <img src="/imgs/스짓 검색.jpg" width="40%" height="500px" /></img>
-<img src="/imgs/흑과백2 상세정보.jpg" width="40%" height="500px" /></img>
+<img src="/imgs/흑과백2 상세정보.jpg" width="40%" height="700px" /></img>
